@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Atendimento Jurídico - Guimoo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .whatsapp-bg {
+            background-color: #EFEAE2;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        /* Custom scrollbar para o chat */
+        .chat-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+        .chat-scroll::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .chat-scroll::-webkit-scrollbar-thumb {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gray-50 flex flex-col text-gray-800">
+
+    <!-- Countdown Banner -->
+    <div class="bg-red-600 text-white text-center py-2 font-bold flex justify-center items-center gap-2 z-20 relative shadow-md">
+        <svg class="w-5 h-5 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        <span>Oferta expira em:</span>
+        <span id="countdown-timer" class="text-2xl tracking-wider tabular-nums">15:00</span>
+    </div>
+
+    <!-- Header Superior -->
+    <header class="bg-[#051F20] text-white py-4 px-6 md:px-10 flex flex-col md:flex-row justify-between items-center shadow-md z-10 relative">
+        <div class="flex items-center space-x-2 mb-4 md:mb-0">
+            <div class="w-8 h-8 bg-emerald-500 rounded-full flex items-center justify-center font-bold text-[#051F20] text-xl">
+                G
+            </div>
+            <span class="text-xl font-semibold tracking-wide">Guimoo</span>
+        </div>
+        
+        <div class="text-center md:text-left">
+            <h1 class="text-lg md:text-xl font-medium">Simule uma conversa real</h1>
+            <p class="text-sm text-gray-300">com os nossos Agentes Jurídicos de IA</p>
+        </div>
+
+        <div class="hidden md:flex items-center bg-white/10 px-4 py-2 rounded-lg border border-white/20">
+            <span class="flex h-3 w-3 relative mr-3">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+            </span>
+            <div class="text-sm">
+                <p class="font-semibold text-emerald-300">Simulação realista</p>
+                <p class="text-xs text-gray-300">Atendimento 100% online</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Área de Conteúdo Principal -->
+    <main class="flex-1 max-w-7xl w-full mx-auto p-4 md:p-6 lg:p-8 flex flex-col lg:flex-row gap-6">
+        
+        <!-- Barra Lateral (Menu de Seleção) -->
+        <aside class="w-full lg:w-80 flex-shrink-0 flex flex-col gap-6">
+            
+            <!-- Passo 1 -->
+            <div>
+                <h2 class="font-bold text-gray-900 mb-1">1. Escolha a área do direito</h2>
+                <p class="text-sm text-gray-500 mb-3">Selecione a área que deseja simular.</p>
+                <div class="space-y-3">
+                    <!-- Opção Ativa -->
+                    <div class="flex items-start p-4 border-2 border-emerald-600 bg-emerald-50/50 rounded-xl relative cursor-default transition-all shadow-sm">
+                        <div class="mt-1 mr-3">
+                            <svg class="w-6 h-6 text-emerald-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-gray-900">Direito Trabalhista</h3>
+                            <p class="text-xs text-gray-600 mt-1">Questões relacionadas com o trabalho e o empregador.</p>
+                        </div>
+                        <div class="absolute top-4 right-4">
+                            <svg class="w-5 h-5 text-green-600 bg-white rounded-full p-0.5 shadow-sm" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Opções Desabilitadas -->
+                    <div class="flex items-start p-4 border border-gray-200 bg-white rounded-xl opacity-60 cursor-not-allowed">
+                        <div class="mt-1 mr-3">
+                            <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-gray-500">Direito Previdenciário</h3>
+                            <p class="text-xs text-gray-400 mt-1">Benefícios do INSS, aposentadorias e pensões.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start p-4 border border-gray-200 bg-white rounded-xl opacity-60 cursor-not-allowed">
+                        <div class="mt-1 mr-3">
+                            <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-gray-500">Direito Civil</h3>
+                            <p class="text-xs text-gray-400 mt-1">Contratos, família, indemnizações e mais.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Passo 2 -->
+            <div>
+                <h2 class="font-bold text-gray-900 mb-1">2. Escolha a causa</h2>
+                <p class="text-sm text-gray-500 mb-3">Selecione o assunto que deseja consultar.</p>
+                <div class="space-y-3">
+                    <!-- Opção Ativa -->
+                    <div class="p-4 border-2 border-emerald-600 bg-emerald-50/50 rounded-xl relative cursor-default shadow-sm flex items-center justify-between">
+                        <div>
+                            <h3 class="font-semibold text-gray-900">Salário-Maternidade</h3>
+                            <p class="text-xs text-gray-600 mt-1">Durante a gestação ou adoção.</p>
+                        </div>
+                        <div>
+                            <svg class="w-5 h-5 text-green-600 bg-white rounded-full p-0.5 shadow-sm" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Opções Desabilitadas -->
+                    <div class="p-4 border border-gray-200 bg-white rounded-xl opacity-60 cursor-not-allowed">
+                        <h3 class="font-semibold text-gray-500">Rescisão Indireta</h3>
+                        <p class="text-xs text-gray-400 mt-1">Quando o empregador comete faltas graves</p>
+                    </div>
+                    <div class="p-4 border border-gray-200 bg-white rounded-xl opacity-60 cursor-not-allowed">
+                        <h3 class="font-semibold text-gray-500">Horas Extras</h3>
+                        <p class="text-xs text-gray-400 mt-1">Trabalho realizado para além da jornada contratual</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Passo 3 -->
+            <div>
+                <h2 class="font-bold text-gray-900 mb-1">3. Iniciar simulação</h2>
+                <p class="text-sm text-gray-500 mb-4">Clique no botão para iniciar a simulação do atendimento.</p>
+                
+                <button id="start-btn" class="w-full py-3 px-4 rounded-xl flex items-center justify-center font-medium text-white transition-all shadow-md bg-emerald-700 hover:bg-emerald-800 hover:shadow-lg active:scale-[0.98]">
+                    <span id="btn-spinner" class="hidden flex items-center">
+                        <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                    </span>
+                    <svg id="btn-icon" class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path>
+                    </svg>
+                    <span id="btn-text">Iniciar Simulação</span>
+                </button>
+
+                <!-- Info Box -->
+                <div class="mt-6 bg-emerald-50 border border-emerald-100 rounded-xl p-4 flex items-start text-sm">
+                    <div class="mr-3 flex-shrink-0">
+                        <svg class="w-5 h-5 text-emerald-700 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <p class="text-emerald-800 leading-relaxed">
+                        <strong>Esta é uma simulação realista.</strong><br/>
+                        As respostas são geradas pela nossa IA com base em dados jurídicos atualizados.
+                    </p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Interface do Chat (Estilo WhatsApp) -->
+        <section class="flex-1 whatsapp-bg rounded-2xl shadow-xl overflow-hidden flex flex-col relative border border-gray-200 h-[800px] lg:h-auto">
+            
+            <!-- Cabeçalho do Chat -->
+            <div class="bg-[#075E54] text-white px-4 py-3 flex items-center justify-between z-10 shadow-sm relative">
+                <div class="flex items-center space-x-3">
+                    <div class="relative">
+                        <img src="https://i.pravatar.cc/150?img=47" alt="Assistente" class="w-10 h-10 rounded-full border-2 border-white/20 object-cover" />
+                        <div class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-[#075E54]"></div>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold flex items-center">
+                            Assistente Jurídica IA
+                            <span class="ml-1 text-green-400">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                </svg>
+                            </span>
+                        </h3>
+                        <p class="text-xs text-green-100/80">online</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <svg class="w-5 h-5 text-white cursor-pointer" fill="currentColor" viewBox="0 0 20 20"><path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z"></path></svg>
+                    <svg class="w-5 h-5 text-white cursor-pointer" fill="currentColor" viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path></svg>
+                    <svg class="w-5 h-5 text-white cursor-pointer" fill="currentColor" viewBox="0 0 20 20"><path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"></path></svg>
+                </div>
+            </div>
+
+            <!-- Área de Mensagens -->
+            <div id="chat-area" class="flex-1 overflow-y-auto p-4 z-10 scroll-smooth chat-scroll relative">
+                
+                <!-- Mensagem inicial de convite -->
+                <div id="initial-message" class="flex justify-center my-10 transition-opacity">
+                    <div class="bg-emerald-100/80 text-emerald-800 text-sm py-2 px-4 rounded-lg shadow-sm border border-emerald-200/50 text-center max-w-xs">
+                        Clique em <strong>"Iniciar Simulação"</strong> no menu lateral para ver a IA em ação.
+                    </div>
+                </div>
+
+                <!-- Recipiente onde as mensagens serão injetadas -->
+                <div id="messages-container" class="space-y-4"></div>
+
+                <!-- Indicador de Digitação (Oculto por defeito) -->
+                <div id="typing-indicator" class="flex justify-start hidden mt-4">
+                    <div class="bg-white rounded-2xl rounded-tl-none px-4 py-3 shadow-sm flex items-center space-x-2 w-fit">
+                        <span class="text-sm text-gray-500 mr-2">Assistente Jurídica IA está a digitar</span>
+                        <div class="flex space-x-1">
+                            <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0ms"></div>
+                            <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 150ms"></div>
+                            <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 300ms"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Input Area (Apenas Visual) -->
+            <div class="bg-[#F0F2F5] px-4 py-3 flex items-center gap-3 z-10 border-t border-gray-200">
+                <svg class="w-6 h-6 text-gray-500 cursor-pointer hover:text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <svg class="w-6 h-6 text-gray-500 cursor-pointer hover:text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"></path></svg>
+                
+                <div class="flex-1 bg-white rounded-full px-4 py-2.5 shadow-sm border border-gray-200">
+                    <p id="input-placeholder" class="text-gray-400 text-sm truncate">
+                        Digite a sua mensagem...
+                    </p>
+                </div>
+                
+                <button id="send-btn" class="w-10 h-10 rounded-full flex items-center justify-center shadow-md transition-colors bg-[#00A884] hover:bg-[#008f6f]">
+                    <svg class="w-5 h-5 text-white transform rotate-45 -mt-1 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Rodapé -->
+    <footer class="bg-white border-t border-gray-200 py-4 text-center mt-8">
+        <p class="text-emerald-800 font-semibold text-lg">Pronto para ver na prática?</p>
+        <p class="text-gray-600 text-sm mt-1">Simule agora mesmo e descubra como a nossa IA pode transformar o seu atendimento.</p>
+    </footer>
+
+    <!-- Floating WhatsApp Button (Canto Esquerdo) -->
+    <a href="https://wa.me/5563981202076" target="_blank" rel="noopener noreferrer" class="fixed bottom-6 left-6 bg-[#25D366] text-white p-4 rounded-full shadow-lg hover:bg-[#1ebd5b] hover:scale-110 transition-all z-50 flex items-center justify-center">
+        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.666.598 1.236.784 1.41.87.174.086.275.072.376-.043.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.1.824zM20.082 3.913C17.915 1.745 15.032.553 11.965.553c-6.148 0-11.144 4.996-11.144 11.144 0 1.964.512 3.882 1.488 5.568L.553 23.447l6.34-1.663c1.616.89 3.447 1.359 5.319 1.359h.005c6.145 0 11.142-4.996 11.142-11.143 0-2.977-1.159-5.776-3.277-7.887z"/>
+        </svg>
+    </a>
+
+    <!-- Lógica de Simulação (JavaScript) -->
+    <script>
+        // Definição das mensagens simuladas
+        const conversationScript = [
+            {
+                sender: 'bot',
+                text: '<p>Olá! 👋 Sou a Assistente Jurídica da Guimoo.</p><p class="mt-2">Vou ajudar a entender mais sobre o benefício de <strong>Salário-Maternidade</strong> e verificar se tem direito.</p><p class="mt-2">Para começarmos, diga-me:</p><p class="mt-2">Qual o seu nome?</p>',
+                time: '10:30',
+                delay: 1500
+            },
+            { sender: 'user', text: 'Lucas Oliveira', time: '10:31', delay: 1000 },
+            {
+                sender: 'bot',
+                text: '<p>Prazer, Lucas! 😊</p><p class="mt-2">Vou fazer algumas perguntas para entender melhor o seu caso, tudo bem?</p>',
+                time: '10:31',
+                delay: 2000
+            },
+            { sender: 'user', text: 'Tudo bem!', time: '10:31', delay: 1000 },
+            { sender: 'bot', text: 'O benefício seria para quem?', time: '10:32', delay: 1500 },
+            { sender: 'user', text: 'Para a minha esposa.', time: '10:32', delay: 1500 },
+            { sender: 'bot', text: 'Possui algum laudo que comprove a condição de saúde ou gravidez?', time: '10:32', delay: 2000 },
+            { sender: 'user', text: 'Sim.', time: '10:32', delay: 1000 },
+            {
+                sender: 'bot',
+                text: '<p>Perfeito! Pode informar-me a data prevista para o parto ou a data em que ocorreu o evento (parto/adoção)?</p><p class="mt-1 text-sm text-gray-500">Exemplo: 15/10/2023</p>',
+                time: '10:33',
+                delay: 2500
+            },
+            { sender: 'user', text: '10/08/2023', time: '10:33', delay: 1500 },
+            {
+                sender: 'bot',
+                text: '<p>Entendi.</p><p class="mt-2">Agora vou precisar de algumas informações profissionais para continuar a análise.</p><p class="mt-2">Ela está empregada com contrato assinado atualmente?</p>',
+                time: '10:34',
+                delay: 2500
+            },
+            { sender: 'user', text: 'Não.', time: '10:35', delay: 1000 },
+            {
+                sender: 'bot',
+                text: '<p>Perfeito, Lucas!</p><p class="mt-2">Com base nas informações, em tese a sua esposa pode ter direito ao <strong>Salário-Maternidade</strong> mesmo estando desempregada (período de graça).</p><p class="mt-2">Para o orientar melhor, vou transferi-lo para um especialista da nossa equipa que vai analisar o caso com mais detalhes, tudo bem?</p>',
+                time: '10:36',
+                delay: 4000
+            },
+            { sender: 'user', text: 'Tudo bem!', time: '10:36', delay: 1000 },
+            {
+                sender: 'bot',
+                text: '<p>Ótimo! Já o estou a conectar com um especialista.</p><p class="mt-1">Em instantes será atendido.</p><p class="mt-1">Se precisar de algo, estarei por aqui. 😉</p>',
+                time: '10:36',
+                delay: 2500
+            }
+        ];
+
+        // Estado da aplicação
+        let isSimulating = false;
+        let currentMessageIndex = 0;
+        let timeoutId = null;
+
+        // Elementos do DOM
+        const chatArea = document.getElementById('chat-area');
+        const messagesContainer = document.getElementById('messages-container');
+        const typingIndicator = document.getElementById('typing-indicator');
+        const initialMessage = document.getElementById('initial-message');
+        const startBtn = document.getElementById('start-btn');
+        const btnText = document.getElementById('btn-text');
+        const btnIcon = document.getElementById('btn-icon');
+        const btnSpinner = document.getElementById('btn-spinner');
+        const inputPlaceholder = document.getElementById('input-placeholder');
+        const sendBtn = document.getElementById('send-btn');
+
+        // Fazer scroll para o fim do chat
+        function scrollToBottom() {
+            chatArea.scrollTo({
+                top: chatArea.scrollHeight,
+                behavior: 'smooth'
+            });
+        }
+
+        // Criar elemento HTML de uma mensagem
+        function createMessageElement(msg) {
+            const wrapper = document.createElement('div');
+            wrapper.className = `flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`;
+
+            const bubbleClasses = msg.sender === 'user' 
+                ? 'bg-[#DCF8C6] text-gray-800 rounded-tr-none' 
+                : 'bg-white text-gray-800 rounded-tl-none';
+
+            let checkIconHTML = '';
+            if (msg.sender === 'user') {
+                checkIconHTML = `<svg class="w-4 h-4 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+            }
+
+            wrapper.innerHTML = `
+                <div class="max-w-[85%] md:max-w-[75%] rounded-2xl px-4 py-2 shadow-sm relative ${bubbleClasses}">
+                    <div class="text-[15px] leading-relaxed break-words">
+                        ${msg.text}
+                    </div>
+                    <div class="text-[11px] text-gray-400 text-right mt-1 flex items-center justify-end gap-1">
+                        ${msg.time}
+                        ${checkIconHTML}
+                    </div>
+                </div>
+            `;
+            return wrapper;
+        }
+
+        // Processar e exibir a próxima mensagem na fila
+        function processNextMessage() {
+            if (!isSimulating) return;
+
+            // Se acabaram as mensagens
+            if (currentMessageIndex >= conversationScript.length) {
+                isSimulating = false;
+                resetButtonState();
+                inputPlaceholder.innerText = "Simulação concluída.";
+                
+                // Adicionar o botão final de CTA com animação
+                setTimeout(() => {
+                    const ctaWrapper = document.createElement('div');
+                    ctaWrapper.className = 'flex justify-center mt-6 mb-4 animate-fade-in w-full';
+                    ctaWrapper.innerHTML = `
+                        <a href="https://hubconectbr.github.io/guimoocrm/#precos" target="_blank" rel="noopener noreferrer" class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-full shadow-lg transition-transform hover:scale-105 uppercase tracking-wide text-sm flex items-center gap-2">
+                            <span>Adquirir a Plataforma Agora</span>
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                        </a>
+                    `;
+                    messagesContainer.appendChild(ctaWrapper);
+                    scrollToBottom();
+                }, 1000);
+
+                return;
+            }
+
+            const currentMsg = conversationScript[currentMessageIndex];
+
+            if (currentMsg.sender === 'bot') {
+                // Mostrar indicador a digitar
+                typingIndicator.classList.remove('hidden');
+                scrollToBottom();
+
+                timeoutId = setTimeout(() => {
+                    typingIndicator.classList.add('hidden');
+                    const msgEl = createMessageElement(currentMsg);
+                    messagesContainer.appendChild(msgEl);
+                    scrollToBottom();
+                    currentMessageIndex++;
+                    processNextMessage();
+                }, currentMsg.delay);
+            } else {
+                // Mensagem do utilizador (delay menor para parecer natural)
+                timeoutId = setTimeout(() => {
+                    const msgEl = createMessageElement(currentMsg);
+                    messagesContainer.appendChild(msgEl);
+                    scrollToBottom();
+                    currentMessageIndex++;
+                    processNextMessage();
+                }, currentMsg.delay);
+            }
+        }
+
+        // Iniciar Simulação
+        function startSimulation() {
+            if (isSimulating) return;
+            
+            // Limpar mensagens anteriores
+            messagesContainer.innerHTML = '';
+            initialMessage.style.display = 'none';
+            typingIndicator.classList.add('hidden');
+            
+            isSimulating = true;
+            currentMessageIndex = 0;
+
+            // Atualizar UI do botão
+            startBtn.classList.remove('bg-emerald-700', 'hover:bg-emerald-800');
+            startBtn.classList.add('bg-emerald-400', 'cursor-not-allowed');
+            btnIcon.classList.add('hidden');
+            btnSpinner.classList.remove('hidden');
+            btnText.innerText = 'A simular...';
+            
+            inputPlaceholder.innerText = 'Aguarde a simulação...';
+            
+            sendBtn.classList.replace('bg-[#00A884]', 'bg-gray-400');
+            sendBtn.classList.remove('hover:bg-[#008f6f]');
+            sendBtn.classList.add('cursor-not-allowed');
+
+            processNextMessage();
+        }
+
+        // Repor o estado do botão ao final da simulação
+        function resetButtonState() {
+            startBtn.classList.remove('bg-emerald-400', 'cursor-not-allowed');
+            startBtn.classList.add('bg-emerald-700', 'hover:bg-emerald-800');
+            btnIcon.classList.remove('hidden');
+            btnSpinner.classList.add('hidden');
+            btnText.innerText = 'Iniciar Simulação';
+            
+            sendBtn.classList.replace('bg-gray-400', 'bg-[#00A884]');
+            sendBtn.classList.add('hover:bg-[#008f6f]');
+            sendBtn.classList.remove('cursor-not-allowed');
+        }
+
+        // Event Listeners
+        startBtn.addEventListener('click', startSimulation);
+
+        // Lógica do Cronómetro de 15 Minutos
+        let timeLeft = 15 * 60; // 15 minutos
+        const timerElement = document.getElementById('countdown-timer');
+        
+        function updateTimer() {
+            const minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
+            
+            if (seconds < 10) {
+                seconds = '0' + seconds;
+            }
+            
+            timerElement.textContent = `${minutes}:${seconds}`;
+            
+            if (timeLeft > 0) {
+                timeLeft--;
+            } else {
+                clearInterval(timerInterval);
+                timerElement.textContent = "00:00";
+            }
+        }
+        
+        const timerInterval = setInterval(updateTimer, 1000);
+        updateTimer(); // inicializar
+
+    </script>
+</body>
+</html>
