@@ -1,0 +1,1257 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guimoo — Demonstração Exclusiva da Plataforma</title>
+<meta name="description" content="Reserve sua sessão exclusiva de demonstração da Guimoo.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --font-display: 'Manrope', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --ink: #0A0F0C;
+    --ink-2: #121912;
+    --ink-3: #182219;
+    --paper: #F0F2EF;
+    --paper-2: #F7F8F6;
+    --text-dark: #EAF2EC;
+    --text-dark-muted: #8FA396;
+    --text-light: #10160F;
+    --text-light-muted: #55625A;
+    --gold: #25D366;
+    --gold-strong: #3EEB7E;
+    --teal: #1FAF5C;
+    --urgent: #E2793A;
+    --border-dark: rgba(234,242,236,0.12);
+    --border-light: rgba(16,22,15,0.1);
+    --radius: 8px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--text-light);
+    font-family:var(--font-body);
+    -webkit-font-smoothing:antialiased;
+  }
+  .mono{font-family:'IBM Plex Mono', monospace;}
+  .display{font-family:var(--font-display);}
+
+  /* ---------- Header ---------- */
+  header{
+    background:var(--ink);
+    color:var(--text-dark);
+    padding:20px 32px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    border-bottom:1px solid var(--border-dark);
+  }
+  .logo{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:19px;
+    letter-spacing:0.01em;
+    color:var(--text-dark);
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .logo-mark{
+    width:9px;height:9px;border-radius:50%;
+    background:var(--gold-strong);
+    box-shadow:0 0 0 3px rgba(224,180,92,0.18);
+  }
+  .header-cta{
+    font-family:var(--font-body);
+    font-size:13px;
+    color:var(--text-dark-muted);
+    text-decoration:none;
+    border:1px solid var(--border-dark);
+    padding:9px 16px;
+    border-radius:var(--radius);
+    transition:border-color .2s ease, color .2s ease;
+  }
+  .header-cta:hover{border-color:var(--gold-strong); color:var(--text-dark);}
+
+  /* ---------- Hero / Stage ---------- */
+  .stage-wrap{
+    background:var(--ink);
+    padding:56px 32px 72px;
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--gold-strong);
+    margin:0 0 14px;
+  }
+  h1{
+    font-family:var(--font-display);
+    font-weight:600;
+    font-size:clamp(28px, 3.6vw, 46px);
+    line-height:1.08;
+    color:var(--text-dark);
+    max-width:760px;
+    margin:0 0 16px;
+  }
+  h1 em{font-style:italic; color:var(--gold-strong);}
+  .subhead{
+    font-size:16px;
+    line-height:1.6;
+    color:var(--text-dark-muted);
+    max-width:560px;
+    margin:0 0 40px;
+  }
+
+  .grid{
+    display:grid;
+    grid-template-columns:280px 1fr;
+    gap:28px;
+    max-width:1180px;
+    margin:0 auto;
+  }
+  @media (max-width: 860px){
+    .grid{grid-template-columns:1fr;}
+    .panel{order:-1;}
+  }
+  @media (max-width: 600px){
+    header{padding:16px 18px; flex-wrap:wrap; gap:10px;}
+    .header-cta{font-size:12px; padding:8px 12px;}
+    .stage-wrap{padding:36px 18px 48px;}
+    .panel-inner{padding:24px 20px;}
+    .docket{padding:18px;}
+    .context{padding:48px 20px;}
+    footer{padding:24px 18px;}
+  }
+  @media (max-width: 440px){
+    .session-toggle{grid-template-columns:1fr;}
+    .field-row{grid-template-columns:1fr;}
+    .end-cta-actions{flex-direction:column;}
+    .end-cta-actions a{width:100%;}
+  }
+
+  /* ---------- Docket sidebar (signature element) ---------- */
+  .docket{
+    background:var(--ink-2);
+    border:1px solid var(--border-dark);
+    border-radius:var(--radius);
+    padding:22px;
+    align-self:start;
+  }
+  .docket-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    border-bottom:1px solid var(--border-dark);
+    padding-bottom:14px;
+    margin-bottom:16px;
+  }
+  .docket-title{
+    font-family:var(--font-display);
+    font-size:14px;
+    color:var(--text-dark);
+    margin:0;
+  }
+  .docket-num{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    color:var(--text-dark-muted);
+  }
+  .docket-item{
+    display:flex;
+    gap:12px;
+    padding:10px 0;
+    border-bottom:1px solid rgba(236,231,218,0.06);
+    opacity:0.45;
+    transition:opacity .3s ease;
+  }
+  .docket-item:last-child{border-bottom:none;}
+  .docket-item.active{opacity:1;}
+  .docket-item.done .docket-item-num{color:var(--teal); border-color:var(--teal);}
+  .docket-item-num{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    width:20px; height:20px;
+    border:1px solid var(--border-dark);
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    color:var(--text-dark-muted);
+    flex-shrink:0;
+  }
+  .docket-item.active .docket-item-num{border-color:var(--gold-strong); color:var(--gold-strong);}
+  .docket-item-text{font-size:13px; color:var(--text-dark); line-height:1.4; padding-top:1px;}
+
+  .docket-status{
+    margin-top:20px;
+    padding-top:18px;
+    border-top:1px solid var(--border-dark);
+  }
+  .docket-row{
+    display:flex; justify-content:space-between; align-items:center;
+    font-size:12px; color:var(--text-dark-muted);
+    margin-bottom:8px;
+  }
+  .docket-row strong{
+    font-family:'IBM Plex Mono', monospace;
+    color:var(--gold-strong);
+    font-weight:500;
+    font-size:12px;
+  }
+  .pulse-dot{
+    width:6px;height:6px;border-radius:50%;
+    background:var(--urgent);
+    display:inline-block;
+    margin-right:6px;
+    animation:pulse 1.6s infinite;
+  }
+  @keyframes pulse{
+    0%{box-shadow:0 0 0 0 rgba(193,84,46,0.5);}
+    70%{box-shadow:0 0 0 6px rgba(193,84,46,0);}
+    100%{box-shadow:0 0 0 0 rgba(193,84,46,0);}
+  }
+
+  /* ---------- Main stage panel ---------- */
+  .panel{
+    background:var(--ink-2);
+    border:1px solid var(--border-dark);
+    border-radius:var(--radius);
+    min-height:460px;
+    position:relative;
+    overflow:hidden;
+  }
+  .panel-inner{padding:36px;}
+
+  /* Registration form */
+  .form-title{
+    font-family:var(--font-display);
+    font-size:22px;
+    color:var(--text-dark);
+    margin:0 0 8px;
+  }
+  .form-sub{
+    font-size:13.5px;
+    color:var(--text-dark-muted);
+    margin:0 0 26px;
+    max-width:480px;
+    line-height:1.55;
+  }
+
+  .session-toggle{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-bottom:22px;
+    margin-top:14px;
+  }
+  .session-opt{
+    position:relative;
+    border:1px solid var(--border-dark);
+    border-radius:var(--radius);
+    padding:14px 16px;
+    cursor:pointer;
+    transition:border-color .2s ease, background .2s ease;
+    background:rgba(255,255,255,0.02);
+  }
+  .session-opt.selected{
+    border-color:var(--gold-strong);
+    background:rgba(224,180,92,0.06);
+  }
+  .session-badge{
+    position:absolute;
+    top:-9px;
+    left:14px;
+    display:inline-flex;
+    align-items:center;
+    gap:4px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:9px;
+    letter-spacing:0.05em;
+    text-transform:uppercase;
+    padding:3px 8px;
+    border-radius:20px;
+    font-weight:600;
+    line-height:1;
+  }
+  .session-badge.live{
+    background:var(--urgent);
+    color:#241205;
+  }
+  .session-badge.live .pulse-dot{
+    background:#241205;
+    margin-right:0;
+    box-shadow:none;
+    animation:pulse 1.6s infinite;
+  }
+  .session-badge.later{
+    background:var(--ink);
+    color:var(--text-dark-muted);
+    border:1px solid var(--border-dark);
+  }
+  .session-opt-label{
+    font-size:11px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--text-dark-muted);
+    font-family:'IBM Plex Mono', monospace;
+    margin-bottom:6px;
+  }
+  .session-opt-main{
+    font-size:14px;
+    color:var(--text-dark);
+    font-weight:500;
+  }
+  .session-opt-note{
+    font-size:12px;
+    color:var(--gold-strong);
+    margin-top:4px;
+    font-family:'IBM Plex Mono', monospace;
+  }
+
+  .schedule-select{
+    display:none;
+    margin-bottom:20px;
+  }
+  .schedule-select.show{display:block;}
+  .schedule-select select{
+    width:100%;
+    background:var(--ink);
+    border:1px solid var(--border-dark);
+    color:var(--text-dark);
+    padding:11px 12px;
+    border-radius:var(--radius);
+    font-family:var(--font-body);
+    font-size:14px;
+  }
+
+  .field-row{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px;}
+  @media (max-width:560px){.field-row{grid-template-columns:1fr;}}
+  input[type="text"], input[type="email"], input[type="tel"]{
+    width:100%;
+    background:var(--ink);
+    border:1px solid var(--border-dark);
+    color:var(--text-dark);
+    padding:11px 12px;
+    border-radius:var(--radius);
+    font-family:var(--font-body);
+    font-size:14px;
+  }
+  input::placeholder{color:var(--text-dark-muted);}
+  input:focus, select:focus{outline:2px solid var(--gold-strong); outline-offset:1px;}
+
+  .area-field{margin-bottom:16px;}
+  .area-label{
+    display:block;
+    font-size:11.5px;
+    color:var(--text-dark-muted);
+    margin-bottom:7px;
+  }
+  .area-label-hint{color:var(--text-dark-muted); font-weight:400;}
+  #areaSelect{
+    width:100%;
+    background:var(--ink);
+    border:1px solid var(--border-dark);
+    color:var(--text-dark);
+    padding:11px 12px;
+    border-radius:var(--radius);
+    font-family:var(--font-body);
+    font-size:14px;
+  }
+  .specialty-group{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+  }
+  @media (max-width:480px){
+    .specialty-group{grid-template-columns:1fr;}
+  }
+  .specialty-opt{
+    display:flex; align-items:center; gap:8px;
+    border:1px solid var(--border-dark);
+    border-radius:var(--radius);
+    padding:9px 10px;
+    cursor:pointer;
+    transition:border-color .2s ease, opacity .2s ease;
+  }
+  .specialty-opt.checked{border-color:var(--gold-strong); background:rgba(37,211,102,0.06);}
+  .specialty-opt.disabled{opacity:0.35; cursor:not-allowed;}
+  .specialty-opt input{width:14px; height:14px; flex-shrink:0;}
+  .specialty-opt span{font-size:12.5px; color:var(--text-dark);}
+
+  .consent-row{
+    display:flex; align-items:flex-start; gap:9px;
+    margin:14px 0 22px;
+  }
+  .consent-row input{width:16px; height:16px; margin-top:2px; flex-shrink:0;}
+  .consent-row label{font-size:12px; color:var(--text-dark-muted); line-height:1.5;}
+  .consent-row a{color:var(--gold-strong);}
+
+  .btn-primary{
+    background:var(--gold);
+    color:var(--ink);
+    border:none;
+    padding:13px 26px;
+    border-radius:var(--radius);
+    font-family:var(--font-body);
+    font-weight:600;
+    font-size:14px;
+    cursor:pointer;
+    transition:background .2s ease;
+  }
+  .btn-primary:hover{background:var(--gold-strong);}
+  .btn-primary:disabled{opacity:0.5; cursor:not-allowed;}
+
+  .form-error{
+    font-size:12px; color:var(--urgent);
+    margin-top:10px;
+    display:none;
+  }
+  .form-error.show{display:block;}
+
+  /* Loading / joining state */
+  .joining{
+    display:none;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    min-height:460px;
+    text-align:center;
+    padding:40px;
+  }
+  .joining.show{display:flex;}
+  .spinner{
+    width:34px;height:34px;
+    border:2px solid var(--border-dark);
+    border-top-color:var(--gold-strong);
+    border-radius:50%;
+    animation:spin 0.9s linear infinite;
+    margin-bottom:22px;
+  }
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .joining-title{font-family:var(--font-display); font-size:19px; color:var(--text-dark); margin:0 0 8px;}
+  .joining-sub{font-size:13px; color:var(--text-dark-muted); margin:0;}
+
+  /* ---------- Proof row: painel real + mini-chat ---------- */
+  .proof-row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+    margin-bottom:28px;
+    align-items:start;
+  }
+  .proof-label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:10.5px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--text-dark-muted);
+    margin-bottom:8px;
+  }
+  .browser-chrome{
+    background:var(--ink);
+    border:1px solid var(--border-dark);
+    border-radius:6px;
+    overflow:hidden;
+  }
+  .chrome-dots{
+    display:flex; gap:5px;
+    padding:8px 10px;
+    background:var(--ink-3);
+  }
+  .chrome-dots span{
+    width:6px;height:6px;border-radius:50%;
+    background:var(--border-dark);
+  }
+  .browser-chrome img{
+    width:100%; display:block;
+    height:112px;
+    object-fit:cover;
+    object-position:top;
+    background:var(--ink-3);
+  }
+  .phone-stage{
+    position:relative;
+    padding:14px 0 22px;
+  }
+  .phone-stage::after{
+    content:'';
+    position:absolute;
+    bottom:6px;
+    left:50%;
+    width:76%;
+    height:22px;
+    transform:translateX(-50%);
+    background:radial-gradient(ellipse at center, rgba(37,211,102,0.4), rgba(37,211,102,0) 72%);
+    filter:blur(7px);
+    z-index:0;
+  }
+  .phone-mock{
+    position:relative;
+    z-index:1;
+    width:136px;
+    margin:0 auto;
+    background:#0c0c0c;
+    border-radius:22px;
+    padding:7px;
+    box-shadow:0 18px 30px -8px rgba(0,0,0,0.55), 0 4px 10px rgba(0,0,0,0.3);
+    border:1px solid rgba(255,255,255,0.08);
+    animation:phoneFloat 4.5s ease-in-out infinite;
+  }
+  @keyframes phoneFloat{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-7px);}
+  }
+  .phone-notch{
+    width:38px; height:5px; border-radius:3px;
+    background:#000;
+    margin:0 auto 5px;
+  }
+  .phone-screen{
+    background:#E7DFD3;
+    border-radius:15px;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    height:238px;
+  }
+  .wa-header{
+    background:#075E54;
+    display:flex; align-items:center; gap:6px;
+    padding:8px 8px;
+    flex-shrink:0;
+  }
+  .wa-avatar{
+    width:22px; height:22px; border-radius:50%;
+    background:var(--gold);
+    color:#075E54;
+    display:flex; align-items:center; justify-content:center;
+    font-size:10px; font-weight:800;
+    font-family:var(--font-display);
+    flex-shrink:0;
+  }
+  .wa-header-text{line-height:1.15;}
+  .wa-name{font-size:9.5px; color:#fff; font-weight:600; font-family:var(--font-body);}
+  .wa-status{font-size:8px; color:rgba(255,255,255,0.72);}
+  .wa-body{
+    flex:1;
+    padding:8px 6px;
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-end;
+    gap:5px;
+    overflow:hidden;
+  }
+  .wa-input{
+    background:#fff;
+    margin:6px;
+    border-radius:14px;
+    padding:6px 10px;
+    font-size:8.5px;
+    color:#9a9a9a;
+    flex-shrink:0;
+  }
+  .mini-msg{
+    padding:5px 8px;
+    border-radius:8px;
+    max-width:86%;
+    font-size:9.5px;
+    line-height:1.35;
+    font-family:var(--font-body);
+    opacity:0;
+    transform:translateY(4px);
+    transition:opacity .3s ease, transform .3s ease;
+  }
+  .mini-msg.show{opacity:1; transform:translateY(0);}
+  .mini-msg.in{background:#fff; color:#1B1B1B; align-self:flex-start; border-bottom-left-radius:2px;}
+  .mini-msg.out{background:#DCF8C6; color:#1B1B1B; align-self:flex-end; border-bottom-right-radius:2px;}
+  .mini-typing{
+    align-self:flex-start;
+    display:flex; gap:3px;
+    padding:6px 9px;
+    background:#fff;
+    border-radius:8px;
+    border-bottom-left-radius:2px;
+    opacity:0;
+    transition:opacity .2s ease;
+  }
+  .mini-typing.show{opacity:1;}
+  .mini-typing span{
+    width:4px; height:4px; border-radius:50%;
+    background:#9a9a9a;
+    animation:typingBounce 1s infinite ease-in-out;
+  }
+  .mini-typing span:nth-child(2){animation-delay:0.15s;}
+  .mini-typing span:nth-child(3){animation-delay:0.3s;}
+  @keyframes typingBounce{
+    0%,60%,100%{transform:translateY(0); opacity:0.5;}
+    30%{transform:translateY(-3px); opacity:1;}
+  }
+  @media (max-width:480px){
+    .proof-row{grid-template-columns:1fr;}
+  }
+
+  /* ---------- Video overlay (play trigger) ---------- */
+  .video-wrap{position:relative;}
+  .video-overlay{
+    position:absolute; inset:0;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:12px;
+    background:linear-gradient(180deg, rgba(10,15,12,0.25), rgba(10,15,12,0.8));
+    cursor:pointer;
+    transition:opacity .25s ease;
+  }
+  .video-overlay.hide{opacity:0; pointer-events:none;}
+  .play-btn{
+    width:58px; height:58px; border-radius:50%;
+    background:var(--gold);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 0 0 8px rgba(37,211,102,0.14);
+  }
+  .play-btn::after{
+    content:'';
+    border-style:solid;
+    border-width:9px 0 9px 15px;
+    border-color:transparent transparent transparent var(--ink);
+    margin-left:3px;
+  }
+  .video-overlay-label{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:14px;
+    color:var(--text-dark);
+    letter-spacing:0.01em;
+  }
+
+  /* Video state */
+  .video-block{display:none;}
+  .video-block.show{display:block;}
+  video{
+    width:100%;
+    display:block;
+    background:#000;
+    border-radius:var(--radius) var(--radius) 0 0;
+  }
+  .video-meta{
+    padding:16px 24px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:10px;
+    border-top:1px solid var(--border-dark);
+  }
+  .video-meta-left{display:flex; align-items:center; gap:10px;}
+  .live-badge{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.06em;
+    color:var(--urgent);
+    display:flex; align-items:center;
+  }
+  .skip-link{
+    font-size:12px; color:var(--text-dark-muted);
+    text-decoration:underline;
+    cursor:pointer;
+    background:none; border:none;
+    font-family:var(--font-body);
+  }
+  .skip-link:hover{color:var(--gold-strong);}
+
+  /* End CTA state */
+  .end-cta{
+    display:none;
+    padding:40px;
+    text-align:center;
+  }
+  .end-cta.show{display:block;}
+  .end-cta-title{
+    font-family:var(--font-display);
+    font-size:24px;
+    color:var(--text-dark);
+    margin:0 0 10px;
+  }
+  .end-cta-sub{
+    font-size:14px; color:var(--text-dark-muted);
+    max-width:440px; margin:0 auto 28px; line-height:1.6;
+  }
+  .end-cta-actions{
+    display:flex; gap:12px; justify-content:center; flex-wrap:wrap;
+  }
+  .btn-ghost{
+    border:1px solid var(--border-dark);
+    color:var(--text-dark);
+    background:transparent;
+    padding:13px 24px;
+    border-radius:var(--radius);
+    font-size:14px;
+    font-weight:500;
+    text-decoration:none;
+    transition:border-color .2s ease;
+  }
+  .btn-ghost:hover{border-color:var(--gold-strong);}
+  .btn-solid-cta{
+    background:var(--gold);
+    color:var(--ink);
+    padding:13px 24px;
+    border-radius:var(--radius);
+    font-size:14px;
+    font-weight:600;
+    text-decoration:none;
+  }
+  .btn-solid-cta:hover{background:var(--gold-strong);}
+
+  /* Below-fold context section */
+  .context{
+    background:var(--paper-2);
+    padding:64px 32px;
+  }
+  .context-inner{
+    max-width:760px; margin:0 auto;
+  }
+  .context h2{
+    font-family:var(--font-display);
+    font-size:24px;
+    color:var(--text-light);
+    margin:0 0 18px;
+  }
+  .context p{
+    font-size:14.5px;
+    line-height:1.75;
+    color:var(--text-light-muted);
+    margin:0 0 14px;
+  }
+
+  footer{
+    background:var(--ink);
+    padding:28px 32px;
+    text-align:center;
+  }
+  footer p{
+    font-size:11.5px;
+    color:var(--text-dark-muted);
+    line-height:1.6;
+    max-width:640px;
+    margin:0 auto 6px;
+  }
+  footer a{color:var(--text-dark-muted);}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo"><span class="logo-mark"></span>Guimoo</div>
+  <a class="header-cta" href="https://wa.me/5563981202076" target="_blank" rel="noopener">Falar com um especialista</a>
+</header>
+
+<div class="stage-wrap">
+  <p class="eyebrow mono">Sessão exclusiva de demonstração</p>
+  <h1>Veja a <em>Guimoo</em> organizando um caso real, do primeiro contato ao fechamento.</h1>
+  <p class="subhead">Reserve sua vaga em uma sessão guiada e limitada. Você acompanha o fluxo completo — captação, triagem por IA e agendamento automático — e ao final pode conversar direto com um especialista.</p>
+
+  <div class="grid">
+
+    <!-- DOCKET SIDEBAR -->
+    <aside class="docket">
+      <div class="docket-head">
+        <p class="docket-title">Pauta da sessão</p>
+        <span class="docket-num">Nº 0142</span>
+      </div>
+
+      <div class="docket-item" data-step="1">
+        <span class="docket-item-num">01</span>
+        <span class="docket-item-text">Abertura e contexto do caso</span>
+      </div>
+      <div class="docket-item" data-step="2">
+        <span class="docket-item-num">02</span>
+        <span class="docket-item-text">Triagem automática por IA</span>
+      </div>
+      <div class="docket-item" data-step="3">
+        <span class="docket-item-num">03</span>
+        <span class="docket-item-text">Agendamento e confirmação</span>
+      </div>
+      <div class="docket-item" data-step="4">
+        <span class="docket-item-num">04</span>
+        <span class="docket-item-text">Encerramento e próximos passos</span>
+      </div>
+
+      <div class="docket-status">
+        <div class="docket-row">
+          <span><span class="pulse-dot"></span>Vagas nesta sessão</span>
+          <strong id="seatsLeft">4 restantes</strong>
+        </div>
+        <div class="docket-row">
+          <span>Próxima sessão expressa</span>
+          <strong id="countdown" class="mono">--:--</strong>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN PANEL -->
+    <div class="panel">
+
+      <!-- STATE 1: registration -->
+      <div class="panel-inner" id="registerState">
+        <div class="proof-row">
+          <div class="proof-card">
+            <div class="proof-label">Painel real do CRM</div>
+            <div class="browser-chrome">
+              <div class="chrome-dots"><span></span><span></span><span></span></div>
+              <img src="https://www.iaqueagenda.com.br/crm.png" alt="Painel do CRM Guimoo" loading="lazy">
+            </div>
+          </div>
+          <div class="proof-card">
+            <div class="proof-label">A IA atendendo agora</div>
+            <div class="phone-stage">
+              <div class="phone-mock">
+                <div class="phone-notch"></div>
+                <div class="phone-screen">
+                  <div class="wa-header">
+                    <div class="wa-avatar">G</div>
+                    <div class="wa-header-text">
+                      <div class="wa-name">Guimoo · IA</div>
+                      <div class="wa-status">online</div>
+                    </div>
+                  </div>
+                  <div class="wa-body" id="miniChat"></div>
+                  <div class="wa-input">Mensagem</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="form-title">Reserve sua vaga</h2>
+        <p class="form-sub">Escolha uma sessão expressa, com vagas limitadas, ou agende para um horário específico.</p>
+
+        <div class="session-toggle">
+          <div class="session-opt selected" data-mode="expressa" onclick="selectMode('expressa')">
+            <span class="session-badge live"><span class="pulse-dot"></span>Começando agora</span>
+            <div class="session-opt-label">Opção 1</div>
+            <div class="session-opt-main">Sessão expressa</div>
+            <div class="session-opt-note" id="expressaNote">começa em 07:32</div>
+          </div>
+          <div class="session-opt" data-mode="agendada" onclick="selectMode('agendada')">
+            <span class="session-badge later">Assista depois</span>
+            <div class="session-opt-label">Opção 2</div>
+            <div class="session-opt-main">Agendar horário</div>
+            <div class="session-opt-note">escolha dia e hora</div>
+          </div>
+        </div>
+
+        <div class="schedule-select" id="scheduleSelect">
+          <select id="scheduleTime"></select>
+        </div>
+
+        <form id="leadForm">
+          <div class="field-row">
+            <input type="text" id="nameInput" placeholder="Nome completo" required>
+            <input type="tel" id="phoneInput" placeholder="Telefone / WhatsApp" required>
+          </div>
+          <input type="email" id="emailInput" placeholder="E-mail profissional" required style="margin-bottom:12px;">
+
+          <div class="area-field">
+            <label class="area-label" for="areaSelect">Área principal de atuação</label>
+            <select id="areaSelect" required></select>
+          </div>
+
+          <div class="area-field">
+            <label class="area-label">Principais especialidades <span class="area-label-hint">(até 3)</span></label>
+            <div id="specialtyGroup" class="specialty-group"></div>
+          </div>
+
+          <div class="consent-row">
+            <input type="checkbox" id="consentInput" required>
+            <label for="consentInput">Autorizo o uso dos meus dados para contato sobre esta demonstração, conforme a Lei nº 13.709/2018 (LGPD). Não compartilhamos seus dados com terceiros.</label>
+          </div>
+
+          <button type="submit" class="btn-primary" id="submitBtn">Confirmar minha vaga</button>
+          <p class="form-error" id="formError">Preencha nome, e-mail, telefone, área de atuação e aceite os termos para continuar.</p>
+        </form>
+      </div>
+
+      <!-- STATE 2: joining -->
+      <div class="joining" id="joiningState">
+        <div class="spinner"></div>
+        <p class="joining-title" id="joiningTitle">Entrando na sessão…</p>
+        <p class="joining-sub" id="joiningSub">Conectando você à sala de demonstração.</p>
+        <a href="#" id="gcalLink" target="_blank" rel="noopener" class="btn-ghost" style="display:none; margin-top:22px;">Adicionar ao Google Agenda</a>
+      </div>
+
+      <!-- STATE 3: video -->
+      <div class="video-block" id="videoState">
+        <div class="video-wrap">
+          <video id="demoVideo" controls playsinline>
+            <!-- Vídeo real: coloque este arquivo HTML na mesma pasta que contém a subpasta "videos" -->
+            <source src="videos/Apresenta%C3%A7%C3%A3o_Guimoo_IA.mp4" type="video/mp4">
+          </video>
+          <div class="video-overlay" id="videoOverlay" onclick="startVideo()">
+            <div class="play-btn"></div>
+            <div class="video-overlay-label">Apresentação da plataforma</div>
+          </div>
+        </div>
+        <div class="video-meta">
+          <div class="video-meta-left">
+            <span class="live-badge"><span class="pulse-dot"></span>SESSÃO EM ANDAMENTO</span>
+          </div>
+          <button class="skip-link" onclick="showEndCta()">Já assisti, ir para os próximos passos</button>
+        </div>
+      </div>
+
+      <!-- STATE 4: end CTA -->
+      <div class="end-cta" id="endCtaState">
+        <p class="eyebrow mono" style="text-align:center;">Sessão encerrada</p>
+        <h3 class="end-cta-title">O que você viu pode estar rodando no seu escritório ainda esta semana.</h3>
+        <p class="end-cta-sub">Fale com um especialista para tirar dúvidas específicas do seu caso, ou avance direto para os planos disponíveis.</p>
+        <div class="end-cta-actions">
+          <a class="btn-ghost" id="endCtaWhatsapp" href="https://wa.me/5563981202076" target="_blank" rel="noopener">Falar com um especialista</a>
+          <a class="btn-solid-cta" href="https://www.iaqueagenda.com.br/#precos" target="_blank" rel="noopener">Ver planos</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="context">
+  <div class="context-inner">
+    <h2>O que você vai ver nesta sessão</h2>
+    <p>Esta é uma sessão guiada, com conteúdo apresentado em sequência fixa e vagas limitadas por horário. O objetivo é mostrar, em um caso próximo da realidade de um escritório, como a triagem por IA reduz o tempo entre o primeiro contato e o agendamento.</p>
+    <p>Ao final, você decide o próximo passo: conversar com um especialista sobre o seu contexto específico, ou seguir direto para a página de planos.</p>
+  </div>
+</div>
+
+<footer>
+  <p>Ao confirmar sua vaga, você concorda com o tratamento dos seus dados pessoais (nome, e-mail e telefone) para fins de contato sobre esta demonstração, em conformidade com a LGPD (Lei nº 13.709/2018). <a href="https://hub.guimoo.com.br/privacidade" target="_blank" rel="noopener">Política de Privacidade</a>.</p>
+  <p>© 2026 Guimoo. Todos os direitos reservados. GUIMOO SOLUÇÕES DIGITAIS — CNPJ: 63.970.695/0001-54</p>
+</footer>
+
+<script>
+  // ---------- Countdown to next "sessão expressa" (rounds up to next 15-min block) ----------
+  function nextSlot(){
+    const now = new Date();
+    const mins = now.getMinutes();
+    const nextQuarter = Math.ceil((mins+1)/15)*15;
+    const target = new Date(now);
+    target.setMinutes(nextQuarter, 0, 0);
+    if(nextQuarter === 60){ target.setHours(target.getHours()); }
+    return target;
+  }
+  let slotTarget = nextSlot();
+  function formatCountdown(){
+    const now = new Date();
+    let diff = Math.max(0, Math.floor((slotTarget - now)/1000));
+    if(diff === 0){ slotTarget = nextSlot(); diff = Math.floor((slotTarget - new Date())/1000); }
+    const m = String(Math.floor(diff/60)).padStart(2,'0');
+    const s = String(diff%60).padStart(2,'0');
+    return m+':'+s;
+  }
+  function tickCountdown(){
+    const val = formatCountdown();
+    document.getElementById('countdown').textContent = val;
+    document.getElementById('expressaNote').textContent = 'começa em ' + val;
+  }
+  tickCountdown();
+  setInterval(tickCountdown, 1000);
+
+  // ---------- Populate "agendada" options (next 3 business days, 2 slots each) ----------
+  const scheduleSelectEl = document.getElementById('scheduleTime');
+  const dayNames = ['dom','seg','ter','qua','qui','sex','sáb'];
+  (function populateSchedule(){
+    let d = new Date();
+    let added = 0;
+    while(added < 3){
+      d.setDate(d.getDate()+1);
+      if(d.getDay() === 0 || d.getDay() === 6) continue; // pula fim de semana
+      ['10:00','16:00'].forEach(t=>{
+        const opt = document.createElement('option');
+        const label = `${dayNames[d.getDay()]} ${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')} — ${t}`;
+        opt.value = label;
+        opt.textContent = label;
+        scheduleSelectEl.appendChild(opt);
+      });
+      added++;
+    }
+  })();
+
+  // ---------- Área de atuação e especialidades (máx. 3) ----------
+  const areaMap = {
+    'Direito Previdenciário': ['Salário-Maternidade', 'Auxílio-Doença', 'Auxílio-Acidente', 'Pensão por Morte', 'BPC/LOAS', 'Aposentadoria por Invalidez', 'Planejamento Previdenciário'],
+    'Direito Trabalhista': ['Rescisão Indireta', 'Verbas Rescisórias', 'Horas Extras', 'Assédio Moral', 'Acidente de Trabalho'],
+    'Direito Bancário': ['Revisão de Financiamento', 'Juros Abusivos', 'Fraude Bancária e Pix', 'Busca e Apreensão de Veículo'],
+    'Direito de Família': ['Divórcio', 'Pensão Alimentícia', 'Guarda de Filhos', 'Inventário e Partilha'],
+    'Direito Imobiliário': ['Despejo', 'Usucapião', 'Regularização de Imóvel'],
+    'Direito do Consumidor': ['Cobrança Indevida', 'Produto com Defeito', 'Negativação Indevida'],
+    'Direito Criminal': ['Defesa Criminal', 'Habeas Corpus', 'Audiência de Custódia'],
+    'Direito Tributário': ['Revisão Tributária', 'Parcelamento de Débitos', 'Restituição de Imposto'],
+  };
+  const areaSelectEl = document.getElementById('areaSelect');
+  const specialtyGroupEl = document.getElementById('specialtyGroup');
+  const MAX_SPECIALTIES = 3;
+
+  const placeholderOpt = document.createElement('option');
+  placeholderOpt.value = '';
+  placeholderOpt.textContent = 'Selecione a área principal';
+  placeholderOpt.disabled = true;
+  placeholderOpt.selected = true;
+  areaSelectEl.appendChild(placeholderOpt);
+  Object.keys(areaMap).forEach(area=>{
+    const opt = document.createElement('option');
+    opt.value = area;
+    opt.textContent = area;
+    areaSelectEl.appendChild(opt);
+  });
+
+  function renderSpecialties(area){
+    specialtyGroupEl.innerHTML = '';
+    (areaMap[area] || []).forEach(item=>{
+      const label = document.createElement('label');
+      label.className = 'specialty-opt';
+      label.innerHTML = `<input type="checkbox" value="${item}"><span>${item}</span>`;
+      specialtyGroupEl.appendChild(label);
+    });
+    updateSpecialtyLimits();
+  }
+
+  function updateSpecialtyLimits(){
+    const boxes = specialtyGroupEl.querySelectorAll('input[type="checkbox"]');
+    const checkedCount = specialtyGroupEl.querySelectorAll('input[type="checkbox"]:checked').length;
+    boxes.forEach(box=>{
+      const opt = box.closest('.specialty-opt');
+      opt.classList.toggle('checked', box.checked);
+      if(!box.checked && checkedCount >= MAX_SPECIALTIES){
+        box.disabled = true;
+        opt.classList.add('disabled');
+      } else {
+        box.disabled = false;
+        opt.classList.remove('disabled');
+      }
+    });
+  }
+
+  areaSelectEl.addEventListener('change', ()=> renderSpecialties(areaSelectEl.value));
+  specialtyGroupEl.addEventListener('change', updateSpecialtyLimits);
+
+  function startVideo(){
+    const video = document.getElementById('demoVideo');
+    video.play().catch(()=>{ /* navegador pode bloquear autoplay com som; usuário usa os controles nativos */ });
+  }
+
+  // ---------- Mini-chat: simulação animada de atendimento da IA (loop) ----------
+  const miniChatEl = document.getElementById('miniChat');
+  const miniScript = [
+    { side:'in',  text:'Fui demitido sem justa causa, não recebi o acerto.' },
+    { side:'out', text:'Entendi. Carteira assinada? Há quanto tempo?' },
+    { side:'in',  text:'Sim, 2 anos e 4 meses.' },
+    { side:'out', text:'Seu caso tem viabilidade. Já reservo um horário com o time.' },
+  ];
+  let miniIdx = 0;
+  function runMiniChat(){
+    if(miniIdx === 0) miniChatEl.innerHTML = '';
+    if(miniIdx >= miniScript.length){
+      setTimeout(()=>{ miniIdx = 0; runMiniChat(); }, 2200);
+      return;
+    }
+    const typing = document.createElement('div');
+    typing.className = 'mini-typing';
+    typing.innerHTML = '<span></span><span></span><span></span>';
+    miniChatEl.appendChild(typing);
+    requestAnimationFrame(()=> typing.classList.add('show'));
+
+    setTimeout(()=>{
+      typing.remove();
+      const msg = document.createElement('div');
+      const step = miniScript[miniIdx];
+      msg.className = 'mini-msg ' + step.side;
+      msg.textContent = step.text;
+      miniChatEl.appendChild(msg);
+      requestAnimationFrame(()=> msg.classList.add('show'));
+      while(miniChatEl.children.length > 3) miniChatEl.removeChild(miniChatEl.firstChild);
+      miniIdx++;
+      setTimeout(runMiniChat, 1500);
+    }, 900);
+  }
+  runMiniChat();
+
+  // ---------- Session mode toggle ----------
+  let selectedMode = 'expressa';
+  function selectMode(mode){
+    selectedMode = mode;
+    document.querySelectorAll('.session-opt').forEach(el=>{
+      el.classList.toggle('selected', el.dataset.mode === mode);
+    });
+    document.getElementById('scheduleSelect').classList.toggle('show', mode === 'agendada');
+  }
+
+  // ---------- Seats left (visual only, resets on reload) ----------
+  let seats = 4;
+  function decrementSeat(){
+    seats = Math.max(1, seats-1);
+    document.getElementById('seatsLeft').textContent = seats + ' restantes';
+  }
+
+  // ---------- Form submit -> joining -> video ----------
+  const leadForm = document.getElementById('leadForm');
+  const formError = document.getElementById('formError');
+
+  // Gera um link "Adicionar ao Google Agenda" pré-preenchido (sem necessidade de OAuth/backend)
+  function buildGoogleCalendarLink(scheduleLabel){
+    // scheduleLabel vem como "seg 20/07 — 10:00"; aqui extraímos dia/mês e hora
+    const now = new Date();
+    const match = scheduleLabel.match(/(\d{2})\/(\d{2}).*?(\d{2}):(\d{2})/);
+    let start = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 10, 0);
+    if(match){
+      const [, dd, mm, hh, min] = match;
+      start = new Date(now.getFullYear(), parseInt(mm)-1, parseInt(dd), parseInt(hh), parseInt(min));
+    }
+    const end = new Date(start.getTime() + 45*60000); // sessão de 45 min
+    const fmt = d => d.toISOString().replace(/[-:]/g,'').split('.')[0]+'Z';
+    const params = new URLSearchParams({
+      action: 'TEMPLATE',
+      text: 'Demonstração guiada — Guimoo',
+      dates: `${fmt(start)}/${fmt(end)}`,
+      details: 'Sessão exclusiva de demonstração da plataforma Guimoo. Link de acesso será enviado por WhatsApp.',
+    });
+    return 'https://calendar.google.com/calendar/render?' + params.toString();
+  }
+
+  let currentLead = {};
+
+  leadForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    const name = document.getElementById('nameInput').value.trim();
+    const email = document.getElementById('emailInput').value.trim();
+    const phone = document.getElementById('phoneInput').value.trim();
+    const consent = document.getElementById('consentInput').checked;
+    const area = areaSelectEl.value;
+    const especialidades = Array.from(specialtyGroupEl.querySelectorAll('input[type="checkbox"]:checked')).map(b=>b.value);
+
+    if(!name || !email || !phone || !consent || !area){
+      formError.classList.add('show');
+      return;
+    }
+    formError.classList.remove('show');
+
+    const horarioEscolhido = selectedMode === 'agendada' ? scheduleSelectEl.value : 'expressa (imediata)';
+
+    const leadData = {
+      nome: name,
+      email: email,
+      telefone: phone,
+      area: area,
+      especialidades: especialidades,
+      modo: selectedMode,
+      horario: horarioEscolhido,
+      timestamp: new Date().toISOString()
+    };
+    currentLead = leadData;
+
+    // ---------- Envio para o webhook do Guimoo ----------
+    // Cole aqui a URL do webhook (aba "Geral" do webhook "IAQUEAGENDA" no painel).
+    const GUIMOO_WEBHOOK_URL = 'COLE_AQUI_A_URL_DO_WEBHOOK';
+
+    // Telefone limpo, só dígitos, com DDI 55 (formato que o exemplo de teste do webhook usa: "5511999999999")
+    function normalizePhone(raw){
+      let digits = raw.replace(/\D/g, '');
+      if(!digits.startsWith('55')) digits = '55' + digits;
+      return digits;
+    }
+
+    // Texto corrido para o campo "Texto/Mensagem" do mapeamento — é o que o agente do Guimoo recebe como contexto
+    const especialidadesTexto = especialidades.length ? especialidades.join(', ') : 'não informado';
+    const textoMensagem = `Novo agendamento pela página de demonstração. `
+      + `Sessão: ${selectedMode === 'agendada' ? 'agendada para ' + horarioEscolhido : 'expressa (imediata)'}. `
+      + `Área: ${area}. Especialidades: ${especialidadesTexto}. E-mail: ${email}.`;
+
+    const webhookPayload = {
+      phone: normalizePhone(phone),
+      name: name,
+      text: textoMensagem,
+      data: {
+        origem: 'site-demo',
+        email: email,
+        area: area,
+        especialidades: especialidades,
+        modo: selectedMode,
+        horario: horarioEscolhido,
+        timestamp: leadData.timestamp
+      }
+    };
+
+    if(GUIMOO_WEBHOOK_URL !== 'COLE_AQUI_A_URL_DO_WEBHOOK'){
+      fetch(GUIMOO_WEBHOOK_URL, {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify(webhookPayload)
+      }).catch(err => console.error('Falha ao enviar lead para o webhook:', err));
+    } else {
+      console.warn('GUIMOO_WEBHOOK_URL não configurada — o lead não foi enviado a lugar nenhum.');
+    }
+    console.log('Lead capturado:', leadData);
+    console.log('Payload enviado ao webhook:', webhookPayload);
+
+    decrementSeat();
+    document.getElementById('registerState').style.display = 'none';
+    document.getElementById('joiningState').classList.add('show');
+
+    if(selectedMode === 'agendada'){
+      // Sessão futura: não faz sentido "entrar" agora. Confirma e oferece o link de agenda.
+      document.getElementById('joiningTitle').textContent = 'Vaga confirmada';
+      document.getElementById('joiningSub').textContent = `Você vai receber a confirmação por WhatsApp para ${scheduleSelectEl.value}.`;
+      const gcalBtn = document.getElementById('gcalLink');
+      gcalBtn.href = buildGoogleCalendarLink(scheduleSelectEl.value);
+      gcalBtn.style.display = 'inline-block';
+      document.querySelector('.spinner').style.display = 'none';
+    } else {
+      setTimeout(()=>{
+        document.getElementById('joiningState').classList.remove('show');
+        document.getElementById('videoState').classList.add('show');
+        const video = document.getElementById('demoVideo');
+        video.play().catch(()=>{ /* autoplay pode ser bloqueado; usuário clica play */ });
+      }, 2600);
+    }
+  });
+
+  // ---------- Docket sync with video progress ----------
+  const video = document.getElementById('demoVideo');
+  const dockItems = document.querySelectorAll('.docket-item');
+  function updateDocket(){
+    if(!video.duration) return;
+    const pct = video.currentTime / video.duration;
+    const stage = Math.min(4, Math.floor(pct*4)+1);
+    dockItems.forEach(item=>{
+      const s = parseInt(item.dataset.step);
+      item.classList.toggle('active', s === stage);
+      item.classList.toggle('done', s < stage);
+    });
+  }
+  video.addEventListener('timeupdate', updateDocket);
+  video.addEventListener('ended', showEndCta);
+  video.addEventListener('play', ()=> document.getElementById('videoOverlay').classList.add('hide'));
+
+  function showEndCta(){
+    document.getElementById('videoState').classList.remove('show');
+    document.getElementById('endCtaState').classList.add('show');
+
+    const nome = currentLead.nome || '';
+    const area = currentLead.area || '';
+    const especialidades = (currentLead.especialidades && currentLead.especialidades.length)
+      ? currentLead.especialidades.join(', ')
+      : '';
+
+    let msg = 'Quero falar com um especialista.';
+    if(nome) msg += ` Meu nome é ${nome}.`;
+    if(area) msg += ` Área de atuação: ${area}.`;
+    if(especialidades) msg += ` Especialidades: ${especialidades}.`;
+
+    const waLink = document.getElementById('endCtaWhatsapp');
+    waLink.href = `https://wa.me/5563981202076?text=${encodeURIComponent(msg)}`;
+  }
+</script>
+
+</body>
+</html>
